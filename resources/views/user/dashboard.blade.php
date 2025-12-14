@@ -11,7 +11,7 @@
             <p class="text-blue-100 max-w-2xl text-lg">Platform terintegrasi untuk melihat jadwal, meminjam peralatan, dan reservasi laboratorium dengan mudah dan cepat.</p>
             
             <div class="mt-6 flex gap-3">
-                <a href="{{ route('jadwal') }}" class="bg-white text-blue-700 px-5 py-2.5 rounded-lg font-semibold shadow hover:bg-gray-100 transition">Cek Jadwal</a>
+                <a href="{{ route('booking.calendar') }}" class="bg-white text-blue-700 px-5 py-2.5 rounded-lg font-semibold shadow hover:bg-gray-100 transition">Cek Jadwal</a>
                 @guest
                     <a href="{{ route('login') }}" class="bg-blue-500 bg-opacity-40 border border-blue-400 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-opacity-60 transition">Login Sekarang</a>
                 @endguest
