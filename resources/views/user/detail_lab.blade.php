@@ -36,7 +36,7 @@
                     <p class="text-sm text-gray-600 mb-6">Pastikan Anda sudah membaca jadwal ketersediaan lab sebelum meminjam.</p>
 
                     @auth
-                        <a href="{{ route('peminjaman') }}" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow-lg shadow-blue-500/30 transition transform hover:-translate-y-0.5">
+                        <a href="{{ route('booking.create') }}" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg shadow-lg shadow-blue-500/30 transition transform hover:-translate-y-0.5">
                             Pinjam Lab Ini
                         </a>
                     @else
