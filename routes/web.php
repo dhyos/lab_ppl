@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 // --- RUTE ADMIN ---
 use App\Http\Controllers\LabController;
 use App\Models\Lab;
+use App\Http\Controllers\BarangController;
+use App\Models\Barang;
 
 // --- RUTE AUTH ---
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login')->middleware('guest');
@@ -58,8 +60,12 @@ Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->prefix('admin')-
     Route::put('/kelola-lab/update/{id}', [LabController::class, 'update'])->name('admin.labs.update');
     Route::delete('/kelola-lab/delete/{id}', [LabController::class, 'destroy'])->name('admin.labs.destroy');
 
-    // Kelola Barang (Biarkan dulu)
-    Route::get('/kelola-barang', function () {
-        return view('admin.kelola_barang');
-    })->name('admin.items');
+    // --- CRUD KELOLA BARANG ---
+    Route::get('/kelola-barang', [BarangController::class, 'index'])->name('admin.barang');
+    Route::get('/kelola-barang/create', [BarangController::class, 'create'])->name('admin.barang.create');
+    Route::post('/kelola-barang/store', [BarangController::class, 'store'])->name('admin.barang.store');
+    Route::get('/kelola-barang/edit/{id}', [BarangController::class, 'edit'])->name('admin.barang.edit');
+    Route::put('/kelola-barang/update/{id}', [BarangController::class, 'update'])->name('admin.barang.update');
+    Route::delete('/kelola-barang/delete/{id}', [BarangController::class, 'destroy'])->name('admin.barang.destroy');
+
 });

@@ -48,7 +48,7 @@
             <h3 class="text-lg font-bold text-gray-800 group-hover:text-blue-600">Kelola Laboratorium &rarr;</h3>
             <p class="text-gray-500 mt-2 text-sm">Tambah, edit, atau hapus data laboratorium yang tersedia.</p>
         </a>
-        <a href="{{ route('admin.items') }}" class="group block bg-white border border-gray-200 rounded-xl p-6 hover:border-purple-500 hover:shadow-lg transition">
+        <a href="{{ route('admin.barang') }}" class="group block bg-white border border-gray-200 rounded-xl p-6 hover:border-purple-500 hover:shadow-lg transition">
             <h3 class="text-lg font-bold text-gray-800 group-hover:text-purple-600">Kelola Barang &rarr;</h3>
             <p class="text-gray-500 mt-2 text-sm">Manajemen inventaris barang lab dan status kondisinya.</p>
         </a>
