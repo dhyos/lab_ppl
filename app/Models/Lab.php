@@ -17,6 +17,8 @@ class Lab extends Model
         'kapasitas',
         'deskripsi',
         'id_admin',
+        'dosen_pj',
+        'gambar'
     ];
 
     // Relasi ke User (Admin)

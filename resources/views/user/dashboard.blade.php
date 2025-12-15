@@ -28,8 +28,11 @@
         @foreach($labs as $lab)
         <div class="bg-white rounded-xl shadow-sm hover:shadow-xl transition duration-300 border border-gray-100 overflow-hidden group flex flex-col h-full">
             <div class="h-40 bg-gray-200 relative overflow-hidden">
-                <img src="https://via.placeholder.com/400x200?text={{ urlencode($lab->nama_lab) }}" alt="{{ $lab->nama_lab }}" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500">
-                
+                @if($lab->gambar)
+                    <img src="{{ asset('storage/' . $lab->gambar) }}" alt="{{ $lab->nama_lab }}" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500">
+                @else
+                    <img src="https://via.placeholder.com/400x200?text={{ urlencode($lab->nama_lab) }}" alt="{{ $lab->nama_lab }}" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500">
+                @endif             
                 <div class="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">
                     {{ $lab->kapasitas }} Org
                 </div>

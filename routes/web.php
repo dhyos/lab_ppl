@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LabController;
 use App\Http\Controllers\BookingController; // Tambahkan ini
 use App\Models\Lab;
+use App\Models\Barang;       // Jangan lupa import ini
+use App\Models\Peminjaman;
 
 // --- RUTE AUTH ---
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login')->middleware('guest');
@@ -63,7 +65,18 @@ Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->prefix('admin')-
     
     // Dashboard Admin
     Route::get('/dashboard', function () {
-        return view('admin.dashboard');
+        // 1. Hitung Total Lab
+        $totalLab = Lab::count();
+
+        // 2. Hitung Total Barang (Jika tabel barang belum ada, anggap 0)
+        $totalBarang = \Illuminate\Support\Facades\Schema::hasTable('barangs') ? Barang::count() : 0;
+
+        // 3. Hitung Peminjaman Status 'pending'
+        $totalPending = \Illuminate\Support\Facades\Schema::hasTable('peminjamens') 
+                        ? Peminjaman::where('status', 'pending')->count() 
+                        : 0;
+
+        return view('admin.dashboard', compact('totalLab', 'totalBarang', 'totalPending'));
     })->name('admin.dashboard');
 
     // === CRUD KELOLA LAB ===

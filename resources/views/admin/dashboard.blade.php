@@ -4,7 +4,7 @@
     <div class="mb-8 flex justify-between items-center">
         <div>
             <h1 class="text-3xl font-bold text-gray-800">Dashboard Admin</h1>
-            <p class="text-gray-500">Selamat datang kembali, Administrator.</p>
+            <p class="text-gray-500">Selamat datang kembali, {{ Auth::user()->nama }}.</p>
         </div>
         <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-lg font-semibold text-sm">
             {{ date('d F Y') }}
@@ -12,13 +12,14 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        
         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
             <div class="p-4 bg-blue-50 text-blue-600 rounded-lg">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
             </div>
             <div>
                 <p class="text-gray-500 text-sm">Total Laboratorium</p>
-                <h3 class="text-2xl font-bold text-gray-800">4</h3>
+                <h3 class="text-2xl font-bold text-gray-800">{{ $totalLab }}</h3>
             </div>
         </div>
 
@@ -28,7 +29,7 @@
             </div>
             <div>
                 <p class="text-gray-500 text-sm">Inventaris Barang</p>
-                <h3 class="text-2xl font-bold text-gray-800">120</h3>
+                <h3 class="text-2xl font-bold text-gray-800">{{ $totalBarang }}</h3>
             </div>
         </div>
 
@@ -38,7 +39,7 @@
             </div>
             <div>
                 <p class="text-gray-500 text-sm">Menunggu Persetujuan</p>
-                <h3 class="text-2xl font-bold text-gray-800">5</h3>
+                <h3 class="text-2xl font-bold text-gray-800">{{ $totalPending }}</h3>
             </div>
         </div>
     </div>
@@ -53,4 +54,4 @@
             <p class="text-gray-500 mt-2 text-sm">Manajemen inventaris barang lab dan status kondisinya.</p>
         </a>
     </div>
-@endsection
+@endsection 
