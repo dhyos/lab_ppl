@@ -8,8 +8,8 @@
 
             <div class="hidden md:flex space-x-8 items-center">
                 <a href="{{ route('user.dashboard') }}" class="text-gray-600 hover:text-blue-600 font-medium transition">Dashboard</a>
-<a href="{{ route('booking.create') }}" class="text-gray-600 hover:text-blue-600 font-medium transition">
-                    Ajukan Peminjaman
+                <a href="{{ route('index.barang') }}" class="text-gray-600 hover:text-blue-600 font-medium transition">
+                    Peminjaman Barang
                 </a>
 
                 <a href="{{ route('booking.calendar') }}" class="text-gray-600 hover:text-blue-600 font-medium transition">Jadwal</a>

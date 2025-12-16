@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LabController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BookingController; // Tambahkan ini
+use App\Http\Controllers\PeminjamanBarangController; // Tambahkan ini
 use App\Models\Lab;
 use App\Models\Barang;
 
@@ -102,3 +103,12 @@ Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->prefix('admin')-
     Route::delete('/kelola-barang/delete/{id}', [BarangController::class, 'destroy'])->name('admin.barang.destroy');
 
 });
+
+Route::get('/peminjaman_barang', [PeminjamanBarangController::class, 'index'])->name('index.barang');
+Route::get('/form_peminjaman', [PeminjamanBarangController::class, 'create_form_peminjaman'])->name('form_peminjaman_brg.barang');
+Route::post('/form_peminjaman/tambah_barang', [PeminjamanBarangController::class, 'tambahItem'])->name('tambah_barang');
+Route::get('/form_peminjaman/reset_items', [PeminjamanBarangController::class, 'resetItems'])->name('reset_items');
+Route::post('/form_peminjaman/simpan_peminjaman', [PeminjamanBarangController::class, 'simpanPeminjaman'])->name('simpan_peminjaman');
+Route::get('/riwayat_peminjaman', [PeminjamanBarangController::class, 'create_riwayat_peminjaman'])->name('riwayat_peminjaman');
+Route::get('/laporan_kerusakan', [PeminjamanBarangController::class, 'create_laporan_kerusakan'])->name('laporan_kerusakan');
+Route::post('/laporan_kerusakan/simpan', [PeminjamanBarangController::class, 'store_kerusakan'])->name('store_laporan_kerusakan');

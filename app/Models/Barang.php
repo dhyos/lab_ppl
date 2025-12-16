@@ -2,16 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Barang extends Model
 {
-    use HasFactory;
-
-    protected $table = 'barang'; // Nama tabel
-    protected $primaryKey = 'id_barang'; // Karena bukan 'id' default
-    public $timestamps = false; 
+    protected $table = 'barang';
+    protected $primaryKey = 'id_barang';
+    public $timestamps = false;
 
     protected $fillable = [
         'nama_barang',
@@ -19,4 +17,13 @@ class Barang extends Model
         'spesifikasi',
         'foto',
     ];
+
+    public function peminjaman_brg_detail():HasMany{
+        return $this->hasMany(Peminjaman_barang_detail::class, 'barang_id', 'id_barang');
+    }
+
+    public function log_barang():HasMany{
+        return $this->hasMany(Laporan_kerusakan::class, 'barang_id', 'id_barang');
+    }
+
 }
