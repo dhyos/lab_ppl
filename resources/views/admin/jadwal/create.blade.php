@@ -11,6 +11,27 @@
                 <h1 class="text-2xl font-bold text-gray-800">Tambah Jadwal Lab</h1>
             </div>
 
+            @if($errors->any())
+                <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded shadow-sm">
+                    <p class="font-bold">Error</p>
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded shadow-sm flex justify-between items-center">
+                    <div>
+                        <p class="font-bold">Error</p>
+                        <p>{{ session('error') }}</p>
+                    </div>
+                    <button onclick="this.parentElement.remove()" class="text-red-700 hover:text-red-900 font-bold text-xl">&times;</button>
+                </div>
+            @endif
+
             <form action="{{ route('admin.jadwal.store') }}" method="POST">
                 @csrf
 
@@ -18,9 +39,11 @@
                     <label for="lab_id" class="block text-sm font-medium text-gray-700 mb-2">Laboratorium</label>
                     <select name="lab_id" id="lab_id" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none" required>
                         <option value="">Pilih Laboratorium</option>
-                        @foreach($labs as $lab)
-                            <option value="{{ $lab->id }}">{{ $lab->nama_lab }}</option>
-                        @endforeach
+                        @forelse($labs as $lab)
+                            <option value="{{ $lab->id_lab }}">{{ $lab->nama_lab }}</option>
+                        @empty
+                            <option value="" disabled>Tidak ada laboratorium tersedia</option>
+                        @endforelse
                     </select>
                 </div>
 
@@ -54,21 +77,12 @@
                     </div>
                 </div>
 
-                <div class="mb-4">
+                <div class="mb-6">
                     <label for="kegiatan" class="block text-sm font-medium text-gray-700 mb-2">Kegiatan</label>
                     <select name="kegiatan" id="kegiatan" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none" required>
                         <option value="">Pilih Kegiatan</option>
                         <option value="Mata Kuliah">Mata Kuliah</option>
                         <option value="Praktikum">Praktikum</option>
-                    </select>
-                </div>
-
-                <div class="mb-6">
-                    <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                    <select name="status" id="status" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none" required>
-                        <option value="">Pilih Status</option>
-                        <option value="aktif">Aktif</option>
-                        <option value="nonaktif">Nonaktif</option>
                     </select>
                 </div>
 

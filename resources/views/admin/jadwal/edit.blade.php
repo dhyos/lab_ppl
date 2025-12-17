@@ -20,7 +20,7 @@
                     <select name="lab_id" id="lab_id" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none" required>
                         <option value="">Pilih Laboratorium</option>
                         @foreach($labs as $lab)
-                            <option value="{{ $lab->id }}" {{ $jadwal->lab_id == $lab->id ? 'selected' : '' }}>{{ $lab->nama_lab }}</option>
+                            <option value="{{ $lab->id_lab }}" {{ $jadwal->lab_id == $lab->id_lab ? 'selected' : '' }}>{{ $lab->nama_lab }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -65,12 +65,11 @@
                 </div>
 
                 <div class="mb-6">
-                    <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                    <select name="status" id="status" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-200 focus:border-blue-500 outline-none" required>
-                        <option value="">Pilih Status</option>
-                        <option value="aktif" {{ $jadwal->status == 'aktif' ? 'selected' : '' }}>Aktif</option>
-                        <option value="nonaktif" {{ $jadwal->status == 'nonaktif' ? 'selected' : '' }}>Nonaktif</option>
-                    </select>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                    <div class="w-full border border-gray-300 rounded-lg p-3 bg-gray-50 text-gray-600">
+                        {{ ucfirst($jadwal->status) }}
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">Status otomatis berdasarkan konflik jadwal</p>
                 </div>
 
                 <div class="flex justify-end gap-3">

@@ -24,27 +24,51 @@ class JadwalLabController extends Controller
     public function create()
     {
         $labs = Lab::all();
+        // dd($labs->toArray()); // Debug labs as array
         return view('admin.jadwal.create', compact('labs'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         $request->validate([
-            'lab_id' => 'required|exists:labs,id',
+            'lab_id' => 'required|exists:lab,id_lab',
             'hari' => 'required|string',
             'tanggal' => 'nullable|date',
             'jam_mulai' => 'required',
             'jam_selesai' => 'required|after:jam_mulai',
-            'status' => 'required|string',
             'kegiatan' => 'required|string',
         ]);
 
-        JadwalLab::create($request->all());
+        // Cek konflik jadwal
+        $conflict = JadwalLab::where('lab_id', $request->lab_id)
+            ->where('hari', $request->hari)
+            ->where(function ($q) use ($request) {
+                if ($request->tanggal) {
+                    $q->where('tanggal', $request->tanggal)->orWhereNull('tanggal');
+                } else {
+                    $q->whereNull('tanggal');
+                }
+            })
+            ->where(function ($query) use ($request) {
+                $query->where(function ($q) use ($request) {
+                    $q->where('jam_mulai', '<', $request->jam_selesai)
+                      ->where('jam_selesai', '>', $request->jam_mulai);
+                });
+            })
+            ->exists();
 
-        return redirect()->route('admin.jadwal.index')->with('success', 'Jadwal berhasil ditambahkan.');
+        if ($conflict) {
+            $lab = Lab::find($request->lab_id);
+            return back()->withInput()->with('error', 'Jadwal bentrok! ' . $lab->nama_lab . ' pada ' . ucfirst($request->hari) . ' ' . ($request->tanggal ?? 'setiap minggu') . ' jam ' . $request->jam_mulai . '-' . $request->jam_selesai . ' sudah terpakai.');
+        }
+
+        try {
+            JadwalLab::create(array_merge($request->all(), ['status' => 'terpakai']));
+            return redirect()->route('admin.jadwal.index')->with('success', 'Jadwal berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            return back()->withInput()->with('error', 'Gagal menambahkan jadwal: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -71,17 +95,58 @@ class JadwalLabController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'lab_id' => 'required|exists:labs,id',
+            'lab_id' => 'required|exists:lab,id_lab',
             'hari' => 'required|string',
             'tanggal' => 'nullable|date',
             'jam_mulai' => 'required',
             'jam_selesai' => 'required|after:jam_mulai',
-            'status' => 'required|string',
             'kegiatan' => 'required|string',
         ]);
 
         $jadwal = JadwalLab::findOrFail($id);
-        $jadwal->update($request->all());
+
+        // Check if conflict-related fields changed
+        $fieldsChanged = $jadwal->lab_id != $request->lab_id ||
+            $jadwal->hari != $request->hari ||
+            $jadwal->tanggal != $request->tanggal ||
+            $jadwal->jam_mulai != $request->jam_mulai ||
+            $jadwal->jam_selesai != $request->jam_selesai;
+
+        if ($fieldsChanged) {
+            // Check for conflicts only if fields changed
+            $conflict = JadwalLab::where('lab_id', $request->lab_id)
+                ->where('hari', $request->hari)
+                ->where('id', '!=', $id) // Exclude current record
+                ->where(function ($q) use ($request) {
+                    if ($request->tanggal) {
+                        $q->where('tanggal', $request->tanggal)->orWhereNull('tanggal');
+                    } else {
+                        $q->whereNull('tanggal');
+                    }
+                })
+                ->where(function ($query) use ($request) {
+                    $query->where(function ($q) use ($request) {
+                        $q->where('jam_mulai', '<', $request->jam_selesai)
+                          ->where('jam_selesai', '>', $request->jam_mulai);
+                    });
+                })
+                ->exists();
+
+            if ($conflict) {
+                $lab = Lab::find($request->lab_id);
+                return back()->withInput()->with('error', 'Jadwal bentrok! ' . $lab->nama_lab . ' pada ' . ucfirst($request->hari) . ' ' . ($request->tanggal ?? 'setiap minggu') . ' jam ' . $request->jam_mulai . '-' . $request->jam_selesai . ' sudah terpakai.');
+            }
+        }
+
+        $jadwal->update([
+            'lab_id' => $request->lab_id,
+            'hari' => $request->hari,
+            'tanggal' => $request->tanggal,
+            'jam_mulai' => $request->jam_mulai,
+            'jam_selesai' => $request->jam_selesai,
+            'kegiatan' => $request->kegiatan,
+            'status' => 'terpakai',
+        ]);
 
         return redirect()->route('admin.jadwal.index')->with('success', 'Jadwal berhasil diperbarui.');
     }

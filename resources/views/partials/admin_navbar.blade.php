@@ -10,7 +10,8 @@
                 <a href="{{ route('admin.labs') }}" class="hover:text-blue-400 font-medium transition">Kelola Lab</a>
                 <a href="{{ route('admin.barang') }}" class="hover:text-blue-400 font-medium transition">Kelola Barang</a>
                 <a href="{{ route('admin.jadwal.index') }}" class="hover:text-blue-400 font-medium transition">Kelola Jadwal</a>
-                <a href="{{ route('admin.booking.index') }}" class="hover:text-blue-400 font-medium transition">Peminjaman</a>
+                <a href="{{ route('admin.booking.index') }}" class="hover:text-blue-400 font-medium transition">Peminjaman Lab</a>
+                <a href="{{ route('admin_booking_barang') }}" class="hover:text-blue-400 font-medium transition">Peminjaman Barang</a>
             </div>
 
             <div class="flex items-center gap-4">
