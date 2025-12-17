@@ -43,13 +43,6 @@ class JadwalLabController extends Controller
         // Cek konflik jadwal
         $conflict = JadwalLab::where('lab_id', $request->lab_id)
             ->where('hari', $request->hari)
-            ->where(function ($q) use ($request) {
-                if ($request->tanggal) {
-                    $q->where('tanggal', $request->tanggal)->orWhereNull('tanggal');
-                } else {
-                    $q->whereNull('tanggal');
-                }
-            })
             ->where(function ($query) use ($request) {
                 $query->where(function ($q) use ($request) {
                     $q->where('jam_mulai', '<', $request->jam_selesai)
@@ -117,13 +110,6 @@ class JadwalLabController extends Controller
             $conflict = JadwalLab::where('lab_id', $request->lab_id)
                 ->where('hari', $request->hari)
                 ->where('id', '!=', $id) // Exclude current record
-                ->where(function ($q) use ($request) {
-                    if ($request->tanggal) {
-                        $q->where('tanggal', $request->tanggal)->orWhereNull('tanggal');
-                    } else {
-                        $q->whereNull('tanggal');
-                    }
-                })
                 ->where(function ($query) use ($request) {
                     $query->where(function ($q) use ($request) {
                         $q->where('jam_mulai', '<', $request->jam_selesai)
