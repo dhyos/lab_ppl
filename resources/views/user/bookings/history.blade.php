@@ -123,4 +123,78 @@
         
     </div>
 </div>
+<div id="instructionModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black bg-opacity-60 backdrop-blur-sm transition-opacity duration-300">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-lg transform scale-100 transition-transform duration-300 relative">
+            
+            {{-- Tombol Close (X) di pojok kanan atas --}}
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            {{-- Ikon Sukses --}}
+            <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6 animate-bounce">
+                <svg class="h-10 w-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+
+            {{-- Judul --}}
+            <h3 class="text-2xl font-bold text-center text-gray-900 mb-2">Pengajuan Terkirim!</h3>
+            
+            {{-- Status --}}
+            <p class="text-center text-gray-600 mb-6">
+                Status peminjaman Anda saat ini: <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-yellow-100 text-yellow-800">PENDING</span>
+            </p>
+
+            {{-- KOTAK PERINGATAN / INSTRUKSI (PENTING) --}}
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-8 rounded-r-lg text-left shadow-sm">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        {{-- Icon Peringatan --}}
+                        <svg class="h-6 w-6 text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-yellow-800 uppercase tracking-wide">
+                            Agar pengajuan Anda diproses lebih lanjut, harap segera menyerahkan <strong>Surat Peminjaman Fisik (Hard Copy)</strong> ke Admin/Asisten Laboratorium yang Anda ajukan.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Tombol Aksi --}}
+            <div class="text-center">
+                <button onclick="closeModal()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5 duration-150 ease-in-out">
+                    Mengerti
+                </button>
+            </div>
+        </div>
+    </div>
+
+    {{-- SCRIPT LOGIKA MODAL --}}
+    <script>
+        // Fungsi Tutup Modal
+        function closeModal() {
+            const modal = document.getElementById('instructionModal');
+            modal.style.opacity = '0';
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.style.opacity = '1';
+            }, 300);
+        }
+
+        // Event Listener saat halaman selesai dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cek apakah ada session 'success' dari Laravel Controller
+            // Session 'success' dikirim saat redirect dari BookingController
+            @if(session('success'))
+                {
+                    const modal = document.getElementById('instructionModal');
+                    // Hapus class hidden agar muncul
+                    modal.classList.remove('hidden');
+                }
+            @endif
+        });
+    </script>
 @endsection

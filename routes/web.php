@@ -7,6 +7,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BookingController; // Tambahkan ini
 use App\Http\Controllers\PeminjamanBarangController; // Tambahkan ini
 use App\Http\Controllers\BookingPeminjamanBarangController;
+use App\Http\Controllers\UserController;
 use App\Models\Lab;
 use App\Models\Barang;
 
@@ -46,7 +47,8 @@ Route::get('/lab/{id}', function ($id) {
 Route::middleware(['auth', 'prevent-back-history'])->group(function () {
     
     // Profil (Placeholder)
-    Route::get('/profil', function() { return "<h1>Profil</h1>"; })->name('profil');
+    Route::get('/profil', function() { return view('user.profil'); })->name('profil');
+    Route::put('/profil/password', [UserController::class, 'updatePassword'])->name('password.update');
 
     // === FITUR PEMINJAMAN (BOOKING) ===
     Route::get('/booking/ajukan', [BookingController::class, 'create'])->name('booking.create');

@@ -33,6 +33,7 @@ class BookingController extends Controller
             'jam_selesai' => 'required|after:jam_mulai',
             'dokumen' => 'required|mimes:pdf,jpg,png|max:2048', 
             'keperluan' => 'required',
+            'no_hp' => 'required|numeric',
         ]);
 
         // Cek Bentrok
@@ -62,6 +63,7 @@ class BookingController extends Controller
             'jam_mulai' => $request->jam_mulai,
             'jam_selesai' => $request->jam_selesai,
             'keperluan' => $request->keperluan,
+            'no_hp' => $request->no_hp,
             'file_surat' => $path,
             'status' => 'pending',
         ]);
