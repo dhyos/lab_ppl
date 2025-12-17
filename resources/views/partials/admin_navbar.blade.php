@@ -8,8 +8,9 @@
             <div class="hidden md:flex space-x-8 items-center">
                 <a href="{{ route('admin.dashboard') }}" class="hover:text-blue-400 font-medium transition">Dashboard</a>
                 <a href="{{ route('admin.labs') }}" class="hover:text-blue-400 font-medium transition">Kelola Lab</a>
-                <a href="{{ route('admin.items') }}" class="hover:text-blue-400 font-medium transition">Kelola Barang</a>
-                <a href="{{ route('admin.schedule') }}" class="hover:text-blue-400 font-medium transition">Kelola Jadwal</a>
+                <a href="{{ route('admin.barang') }}" class="hover:text-blue-400 font-medium transition">Kelola Barang</a>
+                <a href="{{ route('admin.jadwal.index') }}" class="hover:text-blue-400 font-medium transition">Kelola Jadwal</a>
+                <a href="{{ route('admin.booking.index') }}" class="hover:text-blue-400 font-medium transition">Peminjaman</a>
             </div>
 
             <div class="flex items-center gap-4">

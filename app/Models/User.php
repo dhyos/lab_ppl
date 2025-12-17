@@ -10,7 +10,8 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'users'; // Sesuaikan nama tabel
+    protected $table = 'users';
+    protected $primaryKey = 'id'; // Sesuaikan nama tabel
     public $timestamps = false; // Tabel user di SQL Anda tidak punya kolom created_at/updated_at
 
     protected $fillable = [
