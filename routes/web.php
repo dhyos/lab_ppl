@@ -6,6 +6,7 @@ use App\Http\Controllers\LabController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BookingController; // Tambahkan ini
 use App\Http\Controllers\PeminjamanBarangController; // Tambahkan ini
+use App\Http\Controllers\BookingPeminjamanBarangController;
 use App\Models\Lab;
 use App\Models\Barang;
 
@@ -58,6 +59,8 @@ Route::middleware(['auth', 'prevent-back-history'])->group(function () {
     // Cetak Bukti Peminjaman
     Route::get('/booking/{id}/cetak', [BookingController::class, 'cetakBukti'])->name('booking.cetak');
 
+    Route::get('/peminjaman_barang', [PeminjamanBarangController::class, 'index'])->name('index.barang');
+
 });
 
 
@@ -93,6 +96,8 @@ Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->prefix('admin')-
     Route::put('/peminjaman/{id}', [BookingController::class, 'updateStatus'])->name('admin.booking.update');
     Route::get('/pengaturan/format', [BookingController::class, 'settingFormat'])->name('admin.settings.format');
     Route::post('/pengaturan/format', [BookingController::class, 'updateFormat'])->name('admin.settings.update');
+    Route::get('/peminjaman_barang', [BookingPeminjamanBarangController::class, 'indexAdmin'])->name('admin_booking_barang');
+    Route::put('/peminjaman_barang/{id}', [BookingPeminjamanBarangController::class, 'updateStatus'])->name('admin_aprove_barang');
 
     // --- CRUD KELOLA BARANG ---
     Route::get('/kelola-barang', [BarangController::class, 'index'])->name('admin.barang');
@@ -104,7 +109,6 @@ Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->prefix('admin')-
 
 });
 
-Route::get('/peminjaman_barang', [PeminjamanBarangController::class, 'index'])->name('index.barang');
 Route::get('/form_peminjaman', [PeminjamanBarangController::class, 'create_form_peminjaman'])->name('form_peminjaman_brg.barang');
 Route::post('/form_peminjaman/tambah_barang', [PeminjamanBarangController::class, 'tambahItem'])->name('tambah_barang');
 Route::get('/form_peminjaman/reset_items', [PeminjamanBarangController::class, 'resetItems'])->name('reset_items');
